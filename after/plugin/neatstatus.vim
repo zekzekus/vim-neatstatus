@@ -146,6 +146,7 @@ if has('statusline')
         let &stl.="(%-3.p%%) ".g:NeatStatusLine_separator." "
         " column number (minimum width is 4)
         let &stl.="COL %-3.c "
+        let &stl.="\ %#ErrorMsg#%{neomake#statusline#LoclistStatus()}"
 
     endfunc
 
