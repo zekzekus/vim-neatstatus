@@ -116,34 +116,11 @@ if has('statusline')
     "
     function! SetStatusLineStyle()
 
-        " Determine the name of the session or terminal
-        if (strlen(v:servername)>0)
-            if v:servername =~ 'nvim'
-                let g:neatstatus_session = 'neovim'
-            else
-                " If running a GUI vim with servername, then use that
-                let g:neatstatus_session = v:servername
-            endif
-        elseif !has('gui_running')
-            " If running CLI vim say TMUX or use the terminal name.
-            if (exists("$TMUX"))
-                let g:neatstatus_session = 'tmux'
-            else
-                " Giving preference to color-term because that might be more
-                " meaningful in graphical environments. Eg. my $TERM is
-                " usually screen256-color 90% of the time.
-                let g:neatstatus_session = exists("$COLORTERM") ? $COLORTERM : $TERM
-            endif
-        else
-            " idk, my bff jill
-            let g:neatstatus_session = '?'
-        endif
-
         let &stl=""
         " mode (changes color)
         let &stl.="%1*\ %{Mode()} %0*"
         " session name
-        let &stl.="%5* %{g:neatstatus_session} %0*"
+        let &stl.="%5* %{fugitive#statusline()} %0*"
         " file path
         let &stl.=" %<%F "
         " read only, modified, modifiable flags in brackets
@@ -169,8 +146,6 @@ if has('statusline')
         let &stl.="(%-3.p%%) ".g:NeatStatusLine_separator." "
         " column number (minimum width is 4)
         let &stl.="COL %-3.c "
-        " modified / unmodified (purple)
-        let &stl.="%(%6* %{&modified ? '+':''} %)"
 
     endfunc
 
