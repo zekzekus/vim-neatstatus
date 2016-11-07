@@ -151,12 +151,6 @@ if has('statusline')
     endfunc
 
     "FIXME: hack to fix the repeated statusline issue in console version
-    if !has('gui_running')
-        au InsertEnter  * redraw!
-        au InsertChange * redraw!
-        au InsertLeave  * redraw!
-    endif
-
     " whenever the color scheme changes re-apply the colors
     au ColorScheme * call SetNeatstatusColorscheme()
 
